@@ -1,0 +1,120 @@
+<html lang="en-US" style="height: 453px; width: 790px;"><head>
+<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="js/clipnuke.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="js/popup.js"></script>
+<script crossorigin="anonymous" defer="defer" type="application/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/dialog.css">
+<link rel="stylesheet" type="text/css" href="css/extensionDropdown.css">
+<link rel="stylesheet" type="text/css" href="fonts/opensans/opensans.css">
+</head>
+
+<body id="extensionDropdown" class="main feature-omaria no-feature-safariLegacyMessaging admin panelIsActive licenseExpired">
+
+<div id="container" class="initialized">
+
+  <div id="panelContainer" class="panelContainer enterpriseExpired">
+    <h1 class="expired-flow">Please setup a ClipNuke.com account or login.</h1>
+    <p><span>Pre-fill forms to easily publish your videos on sites like Clips4Sale, ManyVids, XVideos, PornHub, and more!</span></p>
+    <div class="features" style="display: none;">
+      <div class="feature one">Shared folders</div>
+      <div class="feature two">Single sign-on</div>
+      <div class="feature three">Business admin console</div>
+    </div>
+    <div class="buttons expired-flow" style="display:none;"><button class="try-btn renew-btn">Register / Login</button></div>
+    <form>
+        <input type="email" name="email" id="email" placeholder="Email" style="padding: 7px; width: 100%; margin-bottom: 8px;">
+        <input type="password" name="password" id="password" placeholder="Password" style="padding: 7px; width: 100%; margin-bottom: 15px;">
+        <button type="submit">Sign In</button>
+    </form>
+    <p>New to ClipNuke? Register here.</p>
+    <p><a href="https://clipnuke.com/wp-login.php?action=lostpassword" target="_blank">Forgot password?</a></p>
+  </div>
+  <div id="restrictionOverlay" class="restriction-overlay"></div>
+  <div class="innerWrapper" id="innerWrapper">
+    <div class="notificationContainer" id="notificationContainer"></div>
+    <div id="logoContainer" class="logo-container">
+      <img id="logoLastPass" class="logo-lp" src="logo.png" alt="LastPass">
+      <div class="logo-partner-vr"></div>
+      <img id="logoPartner" class="logo-partner" src="xxxHTMLLINKxxx0.49408140120877820.4156514463072436xxx" alt="LastPass">
+    </div>
+    <div id="searchContainer" class="header">
+      <div class="searchInputContainer" role="search" aria-label="Search"><input id="searchInput" class="dialogInput searchInput" type="text" placeholder="Search Your Videos" spellcheck="false"><div class="searchCloseButton space-clickable inputDialog" title="Clear Search"></div></div>
+    </div>
+    <div id="main">
+      <ul class="iconList" id="mainMenu">
+        <li id="topLevelContainer" class="matchingSitesTopLevelContainer hidden"><div id="matchingSitesTopLevel"></div></li>
+        <li id="allMatchingSitesMenuItem" class="extensionMenuItem omaria divider hidden" childview="matchingSites">
+          <div id="allMatchingSiteCounter" class="matchingSiteCounter allMatchingSiteCounter"></div>View All Fillable Items<div class="more"></div>
+        </li>
+        <li><a id="vaultMenuItem" class="extensionMenuItem" href="https://clipnuke.com/wp-admin/edit.php?post_type=product" target="_blank" navindex="0">My Videos</a></li>
+        <li id="favoriteSitesMenuItem" childview="favoriteSites" class="extensionMenuItem omaria" navindex="1">Favorites<div class="more"></div></li>
+        <li id="recentSitesMenuItem" class="extensionMenuItem" childview="recentSites" navindex="2">Recently Used<div class="more"></div></li>
+        <li id="allItemsMenuItem" childview="allItems" class="extensionMenuItem omaria" navindex="3">All items<div class="more"></div></li>
+        <li id="promotionMenuItem" class="promotion extensionMenuItem divider"><span class="freeTrialTag"></span></li>
+        <li id="addItem" childview="addOmariaItems" class="extensionMenuItem omaria divider" navindex="4">Add Item<div class="more"></div></li>
+        <li id="sitesMenuItem" childview="sites" class="extensionMenuItem nomaria">Sites<div class="more"></div></li>
+        <li id="notesMenuItem" childview="notes" class="extensionMenuItem nomaria" style="display: list-item;">Secure Notes<div class="more"></div></li>
+        <li id="formFillsMenuItem" childview="formFills" class="extensionMenuItem nomaria">Form Fills<div class="more"></div></li>
+        <li id="generateMenuItem" childview="extensionDropdownGeneratePassword" class="extensionMenuItem" navindex="5">Generate Secure Password<div class="more"></div></li>
+        <li id="securityDashboardMenuItem" class="extensionMenuItem" navindex="6">Security Dashboard<span class="newFeatureTag"></span>
+        </li>
+        <li id="applicationsMenuItem" childview="applications" class="extensionMenuItem nomaria">Applications<div class="more"></div></li>
+        <li id="matchingSitesMenuItem" class="extensionMenuItem divider" childview="matchingSites"><div id="matchingSiteCounter" class="matchingSiteCounter"></div>Show Matching Sites<div class="more"></div></li>
+        <li id="toolsMenuItem" childview="tools" class="extensionMenuItem divider nomaria">More Options<div class="more"></div></li>
+        <li id="optionsMenuItem" childview="options" class="extensionMenuItem divider omaria new" style="display: none;">Account Options<div class="more"></div></li>
+        <li id="prefMenuItem" class="extensionMenuItem nomaria">Preferences</li>
+        <li id="helpMenuItem" class="extensionMenuItem nomaria">Help</li>
+        <li user="Enterprise Admin|Enterprise Role User|Teams Admin|Teams Role User" id="adminConsoleMenuItem" class="extensionMenuItem" navindex="7">Admin Console</li>
+        <li id="specialOfferMenuItem" class="extensionMenuItem menuItemHighlight">Give the Gift of LastPass</li>
+        <li id="optionsMenuItemEnt" childview="options" class="extensionMenuItem divider omaria" navindex="8"><span id="optionsMenuUserName">aiden@xxxmultimedia.com</span><div class="more"></div></li>
+        <li id="logoutMenuItem" class="extensionMenuItem divider" style="display: none;">Log Out:<span id="username">aiden@xxxmultimedia.com</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="zxcvbn.js"></script>
+<script type="text/javascript" src="topics.js"></script>
+<script type="text/javascript" src="platform.js"></script>
+<script type="text/javascript" src="jsOTP.min.js"></script>
+
+<!-- This file is platform specific -->
+<script type="text/javascript" src="platformOverride.js"></script>
+
+<script type="text/javascript" src="vaultStrings.js"></script>
+<script type="text/javascript" src="controller.js"></script>
+<script type="text/javascript" src="tools.js"></script>
+<script type="text/javascript" src="dialogFields.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript" src="view.js"></script><div id="dragElement"></div>
+<script type="text/javascript" src="dialogs.js"></script>
+<script type="text/javascript" src="vaultDialogs.js"></script>
+<script type="text/javascript" src="features.js"></script>
+<script type="text/javascript" src="extensionModel.js"></script>
+<script type="text/javascript" src="extensionLicenseExpiration.js"></script>
+<script type="text/javascript" src="extensionLanguageUpdate.js"></script>
+<script type="text/javascript" src="extensionBillingAddressNotification.js"></script>
+<script type="text/javascript" src="extensionDropdownDeviceLimitNotification.js"></script>
+<script type="text/javascript" src="extensionDropdownMessagingDialog.js"></script>
+<script type="text/javascript" src="extensionOmarMigration.js"></script>
+<script type="text/javascript" src="extensionDropdown.js"></script>
+<script type="text/javascript" src="cc.js"></script>
+<script type="text/javascript" src="dialog.js"></script><div id="dialogLoadingOverlay" class="overlay"></div><div id="dialogOverlay" class="overlay"></div>
+<script type="text/javascript" src="request.js"></script>
+<script type="text/javascript" src="initializeDropdown.js"></script>
+
+<!--Panel Related Stylesheets-->
+<link rel="stylesheet" type="text/css" href="extensionLanguageUpdate.css">
+<link rel="stylesheet" type="text/css" href="extensionDropdownMessagingDialog.css">
+<link rel="stylesheet" type="text/css" href="extensionOmarMigration.css">
+<link rel="stylesheet" type="text/css" href="extensionBillingAddressNotification.css">
+<link rel="stylesheet" type="text/css" href="extensionDropdownDeviceLimitNotification.css">
+
+
+
+<script type="text/javascript" src="popup.bundle.js"></script></body></html>
