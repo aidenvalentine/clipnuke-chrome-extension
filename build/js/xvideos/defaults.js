@@ -2,9 +2,9 @@
  * Defaults
  * Changes user's autofill settings for the page and stores it.
  */
-// Set defaults buttons
+
+// Free/Paying Users?
 $("#upload_form_video_premium legend").append(`<a id="save-default-free-paying" style="color:#ff0000">Save default</a>`);
-// $("#upload_form_video_premium legend").append(`<a id="change-default-free-paying">Change default</a>`);
 // Tick default free/paying on page load.
 var defaultFreePayingElemId = localStorage.getItem('free_or_paying');
 if (defaultFreePayingElemId) {
@@ -19,20 +19,6 @@ $('#save-default-free-paying').click(function(){
     saveDefaultFreePaying('upload_form_video_premium_video_premium_centered_zone_premium');
   }
 });
-// $('#change-default-free-paying').click(function(){
-//   $('#change-default-free-paying').off(); // Disable click so it doesn't popup message again.
-//   changeDefaultFreePaying();
-//   $('.form-field-upload_form_video_premium_video_premium_centered_zone div.content').before(`<span id="change-default-free-paying-instructions" class="clearfix">Select an option to set as the new default</span>`);
-// });
-// function changeDefaultFreePaying() {
-//   console.log("changeDefaultFreePaying()");
-//   $("#upload_form_video_premium_video_premium_centered_zone_all_site").click(function() {
-//     saveDefaultFreePaying(this.id);
-//   });
-//   $("#upload_form_video_premium_video_premium_centered_zone_premium").click(function() {
-//     saveDefaultFreePaying(this.id);
-//   });
-// };
 function saveDefaultFreePaying(elemId) {
   if (confirm('Are you sure you want to save this as the default?')) {
     localStorage.setItem('free_or_paying', elemId);
