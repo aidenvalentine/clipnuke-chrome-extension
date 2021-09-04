@@ -1,19 +1,8 @@
-/* Clips4Sale - Add New Clip Page
- * https://admin.clips4sale.com/clips/show
+/* XVideos - Add New Clip Page
+ * https://www.xvideos.com/account/uploads/new
  */
- // @TODO We need to get the window object var tinyMCE so we can populate the description field.
-// var tinyMCE = retrieveWindowVariables(["tinyMCE"]);
-var page = 1;
+var page = 1; // Increment results pages
 $("div.panel-body").before(`<button id="clipnuke-fetch-clips" style="color:#000;margin:5px;">Latest ClipNuke Clips</button><input id="clipnuke-search" placeholder="Search on ClipNuke" style="color:#000">`);
-
-// Set defaults buttons
-// $("#upload_form_video_premium legend").append(`<a onclick="changeDefaultFreePaying();">Change default</a>`);
-$("#content").append(`<a id="change-default-free-paying">Change default</a>`);
-
-$("#change-default-free-paying").click(function(){
-  console.log("button clicked!");
-  changeDefaultFreePaying()
-});
 
 $("#clipnuke-fetch-clips").click(function(){
   if (!$("#clipnuke-results").length) {
@@ -160,23 +149,3 @@ function createTable() {
   $("div.panel-body").before(html);
   $("#clipnuke-search").after(`<span class="icon-f icf-close" onclick="$('#clipnuke-search').val('');$('#clipnuke-results tbody tr').remove();$('#clipnuke-results-close').remove();" id="clipnuke-results-close"></span>`);
 }
-
-function changeDefaultFreePaying() {
-  console.log("changeDefaultFreePaying()");
-  $("#upload_form_video_premium_video_premium_centered_zone_all_site").click(function() {
-    saveDefaultFreePaying(this.id);
-  });
-  $("#upload_form_video_premium_video_premium_centered_zone_premium").click(function() {
-    saveDefaultFreePaying(this.id);
-  });
-};
-
-function saveDefaultFreePaying(elemId) {
-  if (confirm('Are you sure you want to save this as the default?')) {
-    localStorage.setItem('free_or_paying', elemId);
-    $("#upload_form_video_premium_video_premium_centered_zone_all_site", "#upload_form_video_premium_video_premium_centered_zone_premium").off();
-    console.log('New default was saved to the database.');
-  } else {
-    console.log('New default was not saved to the database.');
-  }
-};
