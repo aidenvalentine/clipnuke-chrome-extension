@@ -112,15 +112,12 @@ function initTable(){
           var cleanDesc = data.description.replace(/kid|xxxmultimedia.com|xxxmultimedia|teenager|force|forced/g,'');
           $("#upload_form_titledesc_description").val(cleanDesc.replace(/(<([^>]+)>)/ig,"")); // Replace strips HTML tags from desc.
           // Tags
-          $('button[data-role="add"]').click(); // Init 1st input
+          $('button[data-role="add"]:first').click(); // Init 1st input
           $.each(data.tags, function(key, value){
-            $(".tag-list input").val(value.name);
-            $('button[data-role="add"]').click(); // Submit
+            $(".tag-list input:first").val(value.name);
+            $('button[data-role="add"]:first').click(); // Submit
             console.log(value.name);
           });
-
-          // Certify you have rights to video
-          $("#upload_form_file_terms").prop('checked', true);
 
           console.log(data); // yes response came, execute success()
         } else {
@@ -149,3 +146,6 @@ function createTable() {
   $("div.panel-body").before(html);
   $("#clipnuke-search").after(`<span class="icon-f icf-close" onclick="$('#clipnuke-search').val('');$('#clipnuke-results tbody tr').remove();$('#clipnuke-results-close').remove();" id="clipnuke-results-close"></span>`);
 }
+
+// Certify you have the rights to video
+$('#upload_form_file_terms').prop('checked', true);

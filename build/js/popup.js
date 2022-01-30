@@ -1,11 +1,7 @@
-import secrets from "secrets";
-
-chrome.storage.sync.set({clipnuke_api_key: secrets.clipnuke_api_key}, function() {
-  console.log('Value is set to ' + value);
-});
-
-chrome.storage.sync.get(['key'], function(result) {
-  console.log('Value currently is ' + result.key);
+var userData = {};
+userData.email = "aiden@xxxmultimedia.com";
+chrome.storage.sync.set({user: userData}, function() {
+  console.log('Value is set to ' + JSON.stringify(userData));
 });
 
 window.addEventListener('load', function() {

@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "0c13bd7a51463f54095c";
+/******/ 	var hotCurrentHash = "dbd9d7d30329f9fdf80d";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -10945,41 +10945,17 @@ module.exports.formatError = function(err) {
 
 /***/ }),
 
-/***/ "./secrets.development.js":
-/*!********************************!*\
-  !*** ./secrets.development.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  clipnuke_api_key: "ck_5e9d0826a35b2fc665835a3d09a8a069fd3fed3d",
-  clipnuke_api_secret: "cs_52b1acd9cfd0c8bc0d7ae1ac17fad8e1071bd5a3"
-});
-
-
-/***/ }),
-
 /***/ "./src/js/popup.js":
 /*!*************************!*\
   !*** ./src/js/popup.js ***!
   \*************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var secrets__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! secrets */ "./secrets.development.js");
-
-
-chrome.storage.sync.set({clipnuke_api_key: secrets__WEBPACK_IMPORTED_MODULE_0__["default"].clipnuke_api_key}, function() {
-  console.log('Value is set to ' + value);
-});
-
-chrome.storage.sync.get(['key'], function(result) {
-  console.log('Value currently is ' + result.key);
+var userData = {};
+userData.email = "aiden@xxxmultimedia.com";
+chrome.storage.sync.set({user: userData}, function() {
+  console.log('Value is set to ' + JSON.stringify(userData));
 });
 
 window.addEventListener('load', function() {
