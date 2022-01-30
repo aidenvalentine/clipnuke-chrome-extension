@@ -206,6 +206,14 @@ function getDataFromForm() {
   } else if (window[2].document.getElementById("tinymce")) {
     data.description = window[2].document.getElementById("tinymce").innerHTML;
   }
+  // PERFORMERS
+  var performers = [];
+  $(".added-performer-name").each(function(i, elem) {
+    performers.push(elem.innerText);
+  });
+  performers.join(", ");
+  // console.log(performers);
+
   // CATEGORIES -- Reads all categories and inserts them into an array.
   var categories = [];
   function getCats() {
