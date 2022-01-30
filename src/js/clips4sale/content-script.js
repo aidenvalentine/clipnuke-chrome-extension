@@ -39,6 +39,14 @@ function fillForm(id) {
         $(`input[name="ClipTitle"]`).val(null); // Reset title
         $(`input[name="ClipTitle"]`).val(data.name);
 
+        // PERFORMERS
+        // var performerIds = [];
+        // performers.forEach(function(elem) {
+          // var performerId = $("#performer_ids").find(`[data-name="${elem}"]`).val();
+        // });
+        // JSON.stringify(performerIds);
+        // $("#performer_ids_collector").val(performerIds); // Set to comma-separated list of performer IDs.
+
         // DESCRIPTION
         var cleanDesc = data.description.replace(/kid|xxxmultimedia.com|xxxmultimedia|teenager|force|forced|blood/g, '');
         if (window[1]) { // Check bc it may not exist for SOME reason. God knows.
