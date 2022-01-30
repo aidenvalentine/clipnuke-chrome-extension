@@ -159,30 +159,46 @@ function overrideSubmit() {
   $(`#clipnukeSubmit`).click(function() {
     let text;
     if (confirm("Press a button!") == true) {
-      text = "Save to ClipNuke as new video?";
+      text = "Save/Update linked video on ClipNuke?";
       $('#submitButton').click();
       saveToClipnuke();
     } else {
-      text = "No! Only Save to Clips4Sale";
+      text = "No! Only Save to Clips4Sale.";
       $('#submitButton').click();
     }
   });
 }
 
 function saveToClipnuke(id) {
+  var data = getDataFromForm();
   if (id) {
     // Update clipnuke product
+    woocommerceSaveProduct(id, data);
   } else {
     // New clipnuke product
+    woocommerceSaveProduct(null, data);
   }
 }
 
 function getDataFromForm() {
+  var data = {}; // Init WooCommerce REST API/Product Data Object
+
+  // Fetch Page Variables
+  var studioId = $(`input[name="producer_id"]`).val();
+  var clipId;
+  if ($(`input[name="id"]`).val()) {
+    clipId = $(`input[name="id"]`).val();
+  }
+
   // TITLE
-  var title = $(`input[name="ClipTitle"]`).val();
+  data.name = $(`input[name="ClipTitle"]`).val();
   // DESCRIPTION
-  var description = window[1].document.getElementById("tinymce").innerHTML;
-  // CATEGORIES
+  if (window[1].document.getElementById("tinymce")) {
+    data.description = window[1].document.getElementById("tinymce").innerHTML;
+  } else if (window[2].document.getElementById("tinymce")) {
+    data.description = window[2].document.getElementById("tinymce").innerHTML;
+  }
+  // CATEGORIES -- Reads all categories and inserts them into an array.
   var categories = [];
   function getCats() {
     $(".select2-selection__rendered").each(function(i, elem) {
@@ -194,25 +210,248 @@ function getDataFromForm() {
   getCats();
 
   // MAIN CATEGORY
-  var mainCategory = categories[0];
+  var primaryCategory = categories[0]; // Grab first category and set as primary.
 
   // RELATED CATEGORIES
   var relatedCategories = categories.shift(); // Remove 1st element, main category.
 
   // TAGS
-  var tags = [];
+  data.tags = [];
   function getTags() {
     $(".keyWordLimit").each(function(i, elem) {
-      console.log(`Tag: ${elem}`, $(elem).val());
-      tags.push(elem);
+      var val = $(elem).val();
+      console.log(`Tag: ${val}`);
+      data.tags.push(val);
     });
   };
-  getTags();
+  // getTags();
+
+  if ($("#ClipName").val()) {
+    data.sku = $("#ClipName").val().replace(/\.[^/.]+$/, ""); // Remove file extension. Regex.
+  }
+
+  // PRICE
+  if ($(`#clip_price`).val()) {
+    data.price = $(`#clip_price`).val();
+    data.regular_price = data.price;
+    // data.sale_price = data.price;
+  }
+
+  // IMAGES
+  data.images = [];
+
+  // METADATA
+  data.meta_data = [];
+  data["meta_data"].push({
+    key: "c4s_uploaded_clips_0_c4s_store_id", // @TODO make this accept multiple c4s versions.
+    value: studioId
+  });
+  data["meta_data"].push({
+    key: "_c4s_uploaded_clips_0_c4s_store_id", // @TODO make this accept multiple c4s versions.
+    value: "field_5cccd476c77bf"
+  });
+  data["meta_data"].push({
+    key: "c4s_uploaded_clips_0_c4s_clip_id", // @TODO make this accept multiple c4s versions.
+    value: clipId
+  });
+  data["meta_data"].push({
+    key: "_c4s_uploaded_clips_0_c4s_clip_id", // @TODO make this accept multiple c4s versions.
+    value: "field_5cccd495c77c0"
+  });
+  // # of versions of this video uploaded to C4S
+  data["meta_data"].push({
+    key: "c4s_uploaded_clips",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_uploaded_clips",
+    value: "field_5cccd3f1c77be"
+  });
+  // Clips4Sale Important Metadata
+  data["meta_data"].push({
+    key: "categories",
+    value: categories
+  });
+  data["meta_data"].push({
+    key: "_categories",
+    value: "field_5cb9c7ca9e319"
+  });
+  data["meta_data"].push({
+    key: "primary_category",
+    value: primaryCategory
+  });
+  data["meta_data"].push({
+    key: "_primary_category",
+    value: "field_5cb9caeec4601"
+  });
+
+  // Optional Clips4Sale Metadata
+  data["meta_data"].push({
+    key: "publication_date",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_publication_date",
+    value: "field_5cb9cb17c4602"
+  });
+  data["meta_data"].push({
+    key: "c4s_poster_image",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_poster_image",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "c4s_trailer",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_trailer",
+    value: "field_5cbadbf2db9b0"
+  });
+  data["meta_data"].push({
+    key: "c4s_file",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_file",
+    value: "field_5cbadc49db9b1"
+  });
+  data["meta_data"].push({
+    key: "c4s_pornstars",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_pornstars",
+    value: "field_5cccadc3d2e3b"
+  });
+  data["meta_data"].push({
+    key: "c4s_tags",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_tags",
+    value: "field_5cccae07d2e3c"
+  });
+  data["meta_data"].push({
+    key: "c4s_price",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_c4s_price",
+    value: "field_5cb9ef3b89f11"
+  });
+  // data["meta_data"].push({
+  //   key: "thumbnail",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_thumbnail",
+  //   value: "field_5cc60b9507a69"
+  // });
+
+  // XXXtra Metadata
+  data["meta_data"].push({
+    key: "filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "price",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_price",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "thumbnail_filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_thumbnail_filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "trailer_filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_trailer_filename",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "trailer_mp4_url",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_trailer_mp4_url",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "minio_object_key",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_minio_object_key",
+    value: "field_5cca0bdfed7da"
+  });
+  data["meta_data"].push({
+    key: "minio_bucket_name",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_minio_bucket_name",
+    value: "field_5cca0b62ed7d9"
+  });
+  data["meta_data"].push({
+    key: "video_duration",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_video_duration",
+    value: "field_5adc9a469b9c1"
+  });
+  data["meta_data"].push({
+    key: "_publicize_twitter_user",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "pornstars",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_pornstars",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "cn_trailer_bucket_name",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_cn_trailer_bucket_name",
+    value: "field_5cce21b2a6f2b"
+  });
+  data["meta_data"].push({
+    key: "cn_trailer_object_key",
+    value: ""
+  });
+  data["meta_data"].push({
+    key: "_cn_trailer_object_key",
+    value: "field_5cce21d9a6f2c"
+  });
+
+  return data;
 };
 
-function woocommerceSaveProduct(id) {
-  var data = {};
-  var woocommerceURLProduct = `https://clipnuke.com/`;
+function woocommerceSaveProduct(id, data={}) {
+  // var data = {};
+  var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
+  console.log(`Sending HTTP Request: ${apiUrl}${id}`);
   var httpVerb;
   if (id) { // If not an existing product, create a new one.
     httpVerb = "put";
@@ -222,7 +461,7 @@ function woocommerceSaveProduct(id) {
     createdOrUpdated = "created";
   }
   $.ajax({
-    url: `https://clipnuke.com/wp-json/wc/v3/products/${id}`,
+    url: `${apiUrl}${id}`,
     data: data,
     type: httpVerb,
     cache: false,
