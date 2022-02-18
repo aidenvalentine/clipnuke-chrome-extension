@@ -39,7 +39,6 @@ function prefillPage() {
   if (id) {
     console.log(`Query Parameter cn-id Exists!\nPrefilling form with ClipNuke's data for this video.`);
     fillForm(id);
-    // jQuery("body").append(`<button class="clipnuke-autofill-form" data-id="${id}"></button>`).click();
   } else {
     // break;
   }
@@ -290,6 +289,13 @@ function fillForm(id) {
     }
   });
 };
+
+function urlUpload(data) {
+  // File URL
+  $('#urlUpload').click();
+  $(`input[name="fileUrl"]`).val(data.source_url);
+  console.log(data.source_url);
+}
 
 /**
  * Autofill Static Fields. Consent checkboxes basically.
