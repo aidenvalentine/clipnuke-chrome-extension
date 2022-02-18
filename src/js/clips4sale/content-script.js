@@ -6,6 +6,7 @@
 var page = 1;
 $("#html5Uploaders").before(`<button id="clipnuke-fetch-clips" style="margin-right:5px;">Autofill Form via ClipNuke</button><input id="clipnuke-search" placeholder="Search your clips">`); // @TODO Make named function
 prefillPage();
+clipNukePopupHtml();
 overrideSubmit();
 acceptContentCertification();
 ifClipIsCloned();
@@ -37,14 +38,6 @@ function fillForm(id) {
         // TITLE
         $(`input[name="ClipTitle"]`).val(null); // Reset title
         $(`input[name="ClipTitle"]`).val(data.name);
-
-        // PERFORMERS
-        // var performerIds = [];
-        // performers.forEach(function(elem) {
-          // var performerId = $("#performer_ids").find(`[data-name="${elem}"]`).val();
-        // });
-        // JSON.stringify(performerIds);
-        // $("#performer_ids_collector").val(performerIds); // Set to comma-separated list of performer IDs.
 
         // DESCRIPTION
         var cleanDesc = data.description.replace(/kid|xxxmultimedia.com|xxxmultimedia|teenager|force|forced|blood/g, '');
@@ -89,11 +82,7 @@ function fillForm(id) {
                 $(`#select2-key${index+1}-container`).html(elem); // Manually set dropdown item
                 localStorage.setItem(`add-clipRelatedCategory${index+1}`, $(`#key${index+1} option:textEquals(${elem})`).val());
               })
-            } else if (element.value.length == 0) {
-              // $(`#select2-key${index+1}-container`).attr('title', ""); // Manually set dropdown item
-              // $(`#select2-key${index+1}-container`).html(null); // Manually set dropdown item
-              // $(`#key${index+1`).val(0);
-            }
+            } else if (element.value.length == 0) {}
           }
         });
 
@@ -214,19 +203,21 @@ function saveToClipnuke(id) {
     woocommerceSaveProduct(id, data);
   } else {
     // New clipnuke product
-    woocommerceSaveProduct(null, data);
+    woocommerceSaveProduct("", data);
   }
 }
 
 function getDataFromForm() {
   var data = {}; // Init WooCommerce REST API/Product Data Object
-
   // Fetch Page Variables
+  var id = getUrlParameter("cn-id"); // ClipNuke Video ID
   var studioId = $(`input[name="producer_id"]`).val();
   var clipId;
   if ($(`input[name="id"]`).val()) {
     clipId = $(`input[name="id"]`).val();
   }
+  // var clipnukeData = woocommerceGetProduct(id); // Fetch existing video's data on ClipNuke.
+
 
   // TITLE
   data.name = $(`input[name="ClipTitle"]`).val();
@@ -241,7 +232,7 @@ function getDataFromForm() {
   $(".added-performer-name").each(function(i, elem) {
     performers.push(elem.innerText);
   });
-  performers.join(", ");
+  // performers.join(", ");
   // console.log(performers);
 
   // CATEGORIES -- Reads all categories and inserts them into an array.
@@ -285,6 +276,11 @@ function getDataFromForm() {
 
   // IMAGES
   data.images = [];
+
+  // ACF
+  data.acf = {};
+  data.acf.pornstars = performers;
+
 
   // METADATA
   data.meta_data = [];
