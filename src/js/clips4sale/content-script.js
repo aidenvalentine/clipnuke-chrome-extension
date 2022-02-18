@@ -277,7 +277,14 @@ function getDataFromForm() {
   // # of versions of this video uploaded to C4S
   data["meta_data"].push({
     key: "c4s_uploaded_clips",
-    value: ""
+    value: function(id) {
+      if (id) {
+        // return // How many C4S versions are attached to this video?
+        return null;
+      } else {
+        return 1;
+      }
+    }
   });
   data["meta_data"].push({
     key: "_c4s_uploaded_clips",
@@ -304,23 +311,39 @@ function getDataFromForm() {
   // Optional Clips4Sale Metadata
   data["meta_data"].push({
     key: "publication_date",
-    value: ""
-  });
+    value: function() {
+      var releaseDate;
+      var d = new Date().toISOString();
+      if ($(`#fut_active`).attr("checked")) {
+        // If clip is set to activate now, set the release date as now.
+        releaseDate = d;
+      } else if ($(`#fut_checkbox`).attr("checked")) {
+        // If clip is sceduled for the future, set release date as specified on C4S.
+        var mm = $(`#fut_month`).val();
+        var dd = $(`#fut_day`).val();
+        var yyyy = $(`#fut_year`).val();
+        var hh = $(`#fut_hour`).val();
+        var mm = $(`#fut_minute`).val();
+        releaseDate = `${yyyy}-${mm}-${dd}T${hh}:${mm}:00.000Z`;
+      }
+      return releaseDate;
+    }
+  })
   data["meta_data"].push({
     key: "_publication_date",
     value: "field_5cb9cb17c4602"
   });
   data["meta_data"].push({
     key: "c4s_poster_image",
-    value: ""
+    value: $(`#ClipImage`).val()
   });
   data["meta_data"].push({
     key: "_c4s_poster_image",
-    value: ""
+    value: "field_5cbad9226a4ad"
   });
   data["meta_data"].push({
     key: "c4s_trailer",
-    value: ""
+    value: $(`#clip_preview`).val()
   });
   data["meta_data"].push({
     key: "_c4s_trailer",
@@ -328,7 +351,7 @@ function getDataFromForm() {
   });
   data["meta_data"].push({
     key: "c4s_file",
-    value: ""
+    value: $(`input[name="ClipName"]`).val()
   });
   data["meta_data"].push({
     key: "_c4s_file",
@@ -352,7 +375,7 @@ function getDataFromForm() {
   });
   data["meta_data"].push({
     key: "c4s_price",
-    value: ""
+    value: $(`#clip_price`).val()
   });
   data["meta_data"].push({
     key: "_c4s_price",
