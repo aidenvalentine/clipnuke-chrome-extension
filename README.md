@@ -6,7 +6,7 @@
 1. Download the zip of this repository.
 1. Extract to a folder on your PC.
 1. Navigate to [chrome://extensions/](chrome://extensions/) and click "Load Unpacked" button.
-1. Select the `/build` directory where you unzipped this extension.
+1. Select the `/build` directory where you unzipped this extension. (Which contains the manifest file).
 ![Chrome Installation](/docs/images/chrome-installation.png)
 
 ## To-Do
