@@ -590,6 +590,31 @@ function woocommerceSaveProduct(id, data={}) {
  * HELPERS
  * These are pieces of code that may be used on multiple content-scripts and can be abstracted to helpers.js
  */
+ /**
+ * ClipNuke - Get Product JSON data from ClipNuke API
+ * @param  {Integer} id               ClipNuke Video ID
+ * @return {Obj}                      Response object from ClipNuke API containing video data or error.
+ */
+ function woocommerceGetProduct(id) {
+   var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
+   console.log(`Sending HTTP GET Request: ${apiUrl}${id}`);
+   $.ajax({
+     url: `${apiUrl}${id}`,
+     type: "get",
+     cache: false,
+     crossDomain: true,
+     asynchronous: false,
+     jsonpCallback: 'deadCode',
+     timeout: 10000, // set a timeout in milliseconds
+     complete: function(xhr, responseText, thrownError) {
+       if (xhr.status == "200") {
+         console.log(`Success! Product #${id} was fetched from ClipNuke.`);
+         console.log(xhr.responseJSON);
+         return xhr.responseJSON;
+       }
+     }
+   });
+ };
 
 // Add a extend pseudo function. CSS Match text.
 $.expr[':'].textEquals = $.expr.createPseudo(function(arg) {
