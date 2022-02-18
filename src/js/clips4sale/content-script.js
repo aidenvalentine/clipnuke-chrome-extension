@@ -518,33 +518,73 @@ function getDataFromForm() {
 };
 
 function woocommerceSaveProduct(id, data={}) {
-  // var data = {};
-  var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
-  console.log(`Sending HTTP Request: ${apiUrl}${id}`);
-  var httpVerb;
-  if (id) { // If not an existing product, create a new one.
-    httpVerb = "put";
-    createdOrUpdated = "updated";
+  if (!data.name && !data.description) {
+    return;
   } else {
-    httpVerb = "post";
-    createdOrUpdated = "created";
+    alert("You must have clip title and description filled out before you can save to ClipNuke.com.");
   }
-  $.ajax({
-    url: `${apiUrl}${id}`,
-    data: data,
-    type: httpVerb,
-    cache: false,
-    crossDomain: true,
-    asynchronous: false,
-    jsonpCallback: 'deadCode',
-    timeout: 10000, // set a timeout in milliseconds
-    complete: function(xhr, responseText, thrownError) {
-      if (xhr.status == "200") {
-        console.log(`Success! Product was ${createdOrUpdated}.`);
+  data.status = "draft"; // NOTE May interfere with pending status. But we don't want to publish to ClipNuke.
+  var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
+  var name = data.name.replace(/\d{3,4}.*$/, "").replace(/\s-\s|\s-|mp4|wmv|MP4|WMV|mov|avi|MOV|AVI|1080+|480+|720+|4K|4k/, "");
+
+  // Get existing product data if it exists.
+  // Do a search on ClipNuke /wc/v3/ api for an existing video.
+  console.log(`Searching for a *similar* product on ClipNuke.`);
+  if (!id) { // If there are similar product results.
+    $.ajax({
+      url: `${apiUrl}?search=${name}`,
+      type: "GET",
+      cache: false,
+      crossDomain: true,
+      asynchronous: false,
+      jsonpCallback: 'deadCode',
+      timeout: 10000, // set a timeout in milliseconds
+      complete: function(xhr, responseText, thrownError) {
+        console.log(xhr.responseJSON);
+        console.log("Response Code: " + xhr.status);
+        if (xhr.responseJSON[0]) {
+          console.log(xhr.responseJSON);
+          console.log(`Found a similar product: ${xhr.responseJSON[0].id}`);
+          data.status = xhr.responseJSON[0].status; // Keep video's status
+          sendToClipnuke(data, xhr.responseJSON[0].id); // Update existing video
+        } else {
+          sendToClipnuke(data); // Create new video
+        }
       }
+    });
+  } else {
+    sendToClipnuke(data, id); // Create new video
+  }
+  function sendToClipnuke(data, id) {
+    console.log(`Sending HTTP Request: ${apiUrl}${id}`);
+    var httpVerb;
+    if (id) { // If not an existing product, create a new one.
+      httpVerb = "put";
+      createdOrUpdated = "updated";
+    } else {
+      httpVerb = "post";
+      createdOrUpdated = "created";
     }
-  });
+    // Submit new data to ClipNuke.
+    $.ajax({
+      url: `${apiUrl}${id}`,
+      data: data,
+      type: httpVerb,
+      cache: false,
+      crossDomain: true,
+      asynchronous: false,
+      jsonpCallback: 'deadCode',
+      timeout: 10000, // set a timeout in milliseconds
+      complete: function(xhr, responseText, thrownError) {
+        if (xhr.status == "200") {
+          console.log(`Success! Product was ${createdOrUpdated}.`);
+          console.log(xhr.responseJSON);
+        }
+      }
+    });
+  }
 };
+
 
 /**
  * HELPERS
