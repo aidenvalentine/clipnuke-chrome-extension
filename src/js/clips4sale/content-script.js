@@ -4,8 +4,7 @@
 // @TODO We need to get the window object var tinyMCE so we can populate the description field.
 // var tinyMCE = retrieveWindowVariables(["tinyMCE"]);
 var page = 1;
-$("#html5Uploaders").before(`<button id="clipnuke-fetch-clips">Autofill Form via ClipNuke</button><input id="clipnuke-search" placeholder="Search your clips">`); // @TODO Make named function
-// $("#keycat").after(`<span onclick="$('#keycat').trigger('change');">Refresh Categories</span>`);
+$("#html5Uploaders").before(`<button id="clipnuke-fetch-clips" style="margin-right:5px;">Autofill Form via ClipNuke</button><input id="clipnuke-search" placeholder="Search your clips">`); // @TODO Make named function
 prefillPage();
 overrideSubmit();
 acceptContentCertification();
