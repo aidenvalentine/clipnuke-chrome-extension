@@ -454,34 +454,34 @@ function getDataFromForm() {
     key: "_video_duration",
     value: "field_5adc9a469b9c1"
   });
-  data["meta_data"].push({
-    key: "_publicize_twitter_user",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "pornstars",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_pornstars",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "cn_trailer_bucket_name",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_cn_trailer_bucket_name",
-    value: "field_5cce21b2a6f2b"
-  });
-  data["meta_data"].push({
-    key: "cn_trailer_object_key",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_cn_trailer_object_key",
-    value: "field_5cce21d9a6f2c"
-  });
+  // data["meta_data"].push({
+  //   key: "_publicize_twitter_user",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "pornstars",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_pornstars",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "cn_trailer_bucket_name",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_cn_trailer_bucket_name",
+  //   value: "field_5cce21b2a6f2b"
+  // });
+  // data["meta_data"].push({
+  //   key: "cn_trailer_object_key",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_cn_trailer_object_key",
+  //   value: "field_5cce21d9a6f2c"
+  // });
 
   return data;
 };
