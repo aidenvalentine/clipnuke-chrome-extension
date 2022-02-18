@@ -161,18 +161,49 @@ function ifClipIsCloned() {
 }
 
 function overrideSubmit() {
-  $('#submitButton').hide(); // Hide default save button
-  $('#submitButton').before(`<button data-toggle="modal" type="button" data-target="#compliance-modal" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;">Add Clip [ClipNuke]</button>`);
+  // $('#submitButton').hide(); // Hide default save button
+  // $('#submitButton').before(`<button data-toggle="modal" type="button" data-target="#compliance-modal" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;">Add Clip [ClipNuke]</button>`); // NOTE this one opens the compliance dialog
+  $('#submitButton').before(`<button data-toggle="modal" type="button" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;margin-right:5px;">Add Clip [ClipNuke]</button>`);
   $(`#clipnukeSubmit`).click(function() {
-    let text;
-    if (confirm("Press a button!") == true) {
-      text = "Save/Update linked video on ClipNuke?";
-      $('#submitButton').click();
-      saveToClipnuke();
-    } else {
-      text = "No! Only Save to Clips4Sale.";
-      $('#submitButton').click();
-    }
+    saveToClipNukePopup()
+    // let text;
+    // if (confirm("Save/Update linked video on ClipNuke?") == true) {
+    //   text = "Save/Update linked video on ClipNuke?";
+    //   saveToClipnuke();
+    //   $('#submitButton').click();
+    // } else {
+    //   text = "No! Only Save to Clips4Sale.";
+    //   $('#submitButton').click();
+    // }
+  });
+}
+
+function clipNukePopupHtml() {
+  var html = `<div id="clipnuke-dialog" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 0px; max-height: none; height: 108.887px; display:none;">
+    <p>Would you like to add this video to your ClipNuke account?</p>
+    <p>We'll create a new video. Or if you already added this video to ClipNuke it will update the Clips4sale section of your ClipNuke video using this info.</p>
+  </div>`;
+  jQuery('body').append(html);
+}
+
+function saveToClipNukePopup() {
+  jQuery( "#clipnuke-dialog" ).dialog({
+    dialogClass: "no-close",
+    buttons: [
+      {
+        text: "Add to ClipNuke",
+        click: function() {
+          var id = getUrlParameter("cn-id"); // ClipNuke Video ID
+          saveToClipnuke(id);
+          jQuery( this ).dialog( "close" );
+        }
+      }, {
+        text: "Skip",
+        click: function() {
+          jQuery( this ).dialog( "close" );
+        }
+      }
+    ]
   });
 }
 
