@@ -156,7 +156,7 @@ function acceptContentCertification() {
 function ifClipIsCloned() {
   // If current URL matches string. It is a "cloned" clip.
   if (window.location.href.includes("c=")) {
-    $("#DisplayOrder").val(1);
+    $("#DisplayOrder").val(0);
   }
 }
 
