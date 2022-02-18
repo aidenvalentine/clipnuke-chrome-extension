@@ -430,22 +430,22 @@ function getDataFromForm() {
     key: "_trailer_mp4_url",
     value: ""
   });
-  data["meta_data"].push({
-    key: "minio_object_key",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_minio_object_key",
-    value: "field_5cca0bdfed7da"
-  });
-  data["meta_data"].push({
-    key: "minio_bucket_name",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_minio_bucket_name",
-    value: "field_5cca0b62ed7d9"
-  });
+  // data["meta_data"].push({
+  //   key: "minio_object_key",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_minio_object_key",
+  //   value: "field_5cca0bdfed7da"
+  // });
+  // data["meta_data"].push({
+  //   key: "minio_bucket_name",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_minio_bucket_name",
+  //   value: "field_5cca0b62ed7d9"
+  // });
   data["meta_data"].push({
     key: "video_duration",
     value: ""
