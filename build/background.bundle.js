@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "682d5734f40a4c9188a7";
+/******/ 	var hotCurrentHash = "39321afcd4588cff3c52";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -9788,9 +9788,9 @@ function (_BaseClient) {
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost&sockPort=3000":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost&sockPort=3001":
 /*!******************************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost&sockPort=3000 ***!
+  !*** (webpack)-dev-server/client?http://localhost&sockPort=3001 ***!
   \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9972,13 +9972,13 @@ var onSocketMessage = {
   }
 };
 socket(socketUrl, onSocketMessage);
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost&sockPort=3000"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost&sockPort=3001"))
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:3000":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:3001":
 /*!*********************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost:3000 ***!
+  !*** (webpack)-dev-server/client?http://localhost:3001 ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10160,7 +10160,7 @@ var onSocketMessage = {
   }
 };
 socket(socketUrl, onSocketMessage);
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:3000"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:3001"))
 
 /***/ }),
 
@@ -10959,14 +10959,14 @@ console.log(666);
 
 /***/ 3:
 /*!**************************************************************************************************************************************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost&sockPort=3000 (webpack)/hot/dev-server.js webpack-dev-server/client?http://localhost:3000 webpack/hot/dev-server ./src/js/background.js ***!
+  !*** multi (webpack)-dev-server/client?http://localhost&sockPort=3001 (webpack)/hot/dev-server.js webpack-dev-server/client?http://localhost:3001 webpack/hot/dev-server ./src/js/background.js ***!
   \**************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\repo\clipnuke-chrome-extension\node_modules\webpack-dev-server\client\index.js?http://localhost&sockPort=3000 */"./node_modules/webpack-dev-server/client/index.js?http://localhost&sockPort=3000");
+__webpack_require__(/*! C:\repo\clipnuke-chrome-extension\node_modules\webpack-dev-server\client\index.js?http://localhost&sockPort=3001 */"./node_modules/webpack-dev-server/client/index.js?http://localhost&sockPort=3001");
 __webpack_require__(/*! C:\repo\clipnuke-chrome-extension\node_modules\webpack\hot\dev-server.js */"./node_modules/webpack/hot/dev-server.js");
-__webpack_require__(/*! webpack-dev-server/client?http://localhost:3000 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:3000");
+__webpack_require__(/*! webpack-dev-server/client?http://localhost:3001 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:3001");
 __webpack_require__(/*! webpack/hot/dev-server */"./node_modules/webpack/hot/dev-server.js");
 module.exports = __webpack_require__(/*! C:\repo\clipnuke-chrome-extension\src\js\background.js */"./src/js/background.js");
 

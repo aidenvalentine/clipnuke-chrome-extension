@@ -4,9 +4,9 @@
 // @TODO We need to get the window object var tinyMCE so we can populate the description field.
 // var tinyMCE = retrieveWindowVariables(["tinyMCE"]);
 var page = 1;
-$("#html5Uploaders").before(`<button id="clipnuke-fetch-clips">Autofill Form via ClipNuke</button><input id="clipnuke-search" placeholder="Search your clips">`); // @TODO Make named function
-// $("#keycat").after(`<span onclick="$('#keycat').trigger('change');">Refresh Categories</span>`);
+$("#html5Uploaders").before(`<button id="clipnuke-fetch-clips" style="margin-right:5px;">Autofill Form via ClipNuke</button><input id="clipnuke-search" placeholder="Search your clips">`); // @TODO Make named function
 prefillPage();
+clipNukePopupHtml();
 overrideSubmit();
 acceptContentCertification();
 ifClipIsCloned();
@@ -38,14 +38,6 @@ function fillForm(id) {
         // TITLE
         $(`input[name="ClipTitle"]`).val(null); // Reset title
         $(`input[name="ClipTitle"]`).val(data.name);
-
-        // PERFORMERS
-        // var performerIds = [];
-        // performers.forEach(function(elem) {
-          // var performerId = $("#performer_ids").find(`[data-name="${elem}"]`).val();
-        // });
-        // JSON.stringify(performerIds);
-        // $("#performer_ids_collector").val(performerIds); // Set to comma-separated list of performer IDs.
 
         // DESCRIPTION
         var cleanDesc = data.description.replace(/kid|xxxmultimedia.com|xxxmultimedia|teenager|force|forced|blood/g, '');
@@ -90,11 +82,7 @@ function fillForm(id) {
                 $(`#select2-key${index+1}-container`).html(elem); // Manually set dropdown item
                 localStorage.setItem(`add-clipRelatedCategory${index+1}`, $(`#key${index+1} option:textEquals(${elem})`).val());
               })
-            } else if (element.value.length == 0) {
-              // $(`#select2-key${index+1}-container`).attr('title', ""); // Manually set dropdown item
-              // $(`#select2-key${index+1}-container`).html(null); // Manually set dropdown item
-              // $(`#key${index+1`).val(0);
-            }
+            } else if (element.value.length == 0) {}
           }
         });
 
@@ -157,23 +145,54 @@ function acceptContentCertification() {
 function ifClipIsCloned() {
   // If current URL matches string. It is a "cloned" clip.
   if (window.location.href.includes("c=")) {
-    $("#DisplayOrder").val(1);
+    $("#DisplayOrder").val(0);
   }
 }
 
 function overrideSubmit() {
-  $('#submitButton').hide(); // Hide default save button
-  $('#submitButton').before(`<button data-toggle="modal" type="button" data-target="#compliance-modal" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;">Add Clip [ClipNuke]</button>`);
+  // $('#submitButton').hide(); // Hide default save button
+  // $('#submitButton').before(`<button data-toggle="modal" type="button" data-target="#compliance-modal" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;">Add Clip [ClipNuke]</button>`); // NOTE this one opens the compliance dialog
+  $('#submitButton').before(`<button data-toggle="modal" type="button" id="clipnukeSubmit" class="btn btn-info btn-xs" style="background-color: limegreen;margin-right:5px;">Add Clip [ClipNuke]</button>`);
   $(`#clipnukeSubmit`).click(function() {
-    let text;
-    if (confirm("Press a button!") == true) {
-      text = "Save/Update linked video on ClipNuke?";
-      $('#submitButton').click();
-      saveToClipnuke();
-    } else {
-      text = "No! Only Save to Clips4Sale.";
-      $('#submitButton').click();
-    }
+    saveToClipNukePopup()
+    // let text;
+    // if (confirm("Save/Update linked video on ClipNuke?") == true) {
+    //   text = "Save/Update linked video on ClipNuke?";
+    //   saveToClipnuke();
+    //   $('#submitButton').click();
+    // } else {
+    //   text = "No! Only Save to Clips4Sale.";
+    //   $('#submitButton').click();
+    // }
+  });
+}
+
+function clipNukePopupHtml() {
+  var html = `<div id="clipnuke-dialog" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 0px; max-height: none; height: 108.887px; display:none;">
+    <p>Would you like to add this video to your ClipNuke account?</p>
+    <p>We'll create a new video. Or if you already added this video to ClipNuke it will update the Clips4sale section of your ClipNuke video using this info.</p>
+  </div>`;
+  jQuery('body').append(html);
+}
+
+function saveToClipNukePopup() {
+  jQuery( "#clipnuke-dialog" ).dialog({
+    dialogClass: "no-close",
+    buttons: [
+      {
+        text: "Add to ClipNuke",
+        click: function() {
+          var id = getUrlParameter("cn-id"); // ClipNuke Video ID
+          saveToClipnuke(id);
+          jQuery( this ).dialog( "close" );
+        }
+      }, {
+        text: "Skip",
+        click: function() {
+          jQuery( this ).dialog( "close" );
+        }
+      }
+    ]
   });
 }
 
@@ -184,19 +203,21 @@ function saveToClipnuke(id) {
     woocommerceSaveProduct(id, data);
   } else {
     // New clipnuke product
-    woocommerceSaveProduct(null, data);
+    woocommerceSaveProduct("", data);
   }
 }
 
 function getDataFromForm() {
   var data = {}; // Init WooCommerce REST API/Product Data Object
-
   // Fetch Page Variables
+  var id = getUrlParameter("cn-id"); // ClipNuke Video ID
   var studioId = $(`input[name="producer_id"]`).val();
   var clipId;
   if ($(`input[name="id"]`).val()) {
     clipId = $(`input[name="id"]`).val();
   }
+  // var clipnukeData = woocommerceGetProduct(id); // Fetch existing video's data on ClipNuke.
+
 
   // TITLE
   data.name = $(`input[name="ClipTitle"]`).val();
@@ -211,7 +232,7 @@ function getDataFromForm() {
   $(".added-performer-name").each(function(i, elem) {
     performers.push(elem.innerText);
   });
-  performers.join(", ");
+  // performers.join(", ");
   // console.log(performers);
 
   // CATEGORIES -- Reads all categories and inserts them into an array.
@@ -256,6 +277,11 @@ function getDataFromForm() {
   // IMAGES
   data.images = [];
 
+  // ACF
+  data.acf = {};
+  data.acf.pornstars = performers;
+
+
   // METADATA
   data.meta_data = [];
   data["meta_data"].push({
@@ -277,7 +303,14 @@ function getDataFromForm() {
   // # of versions of this video uploaded to C4S
   data["meta_data"].push({
     key: "c4s_uploaded_clips",
-    value: ""
+    value: function(id) {
+      if (id) {
+        // return // How many C4S versions are attached to this video?
+        return null;
+      } else {
+        return 1;
+      }
+    }
   });
   data["meta_data"].push({
     key: "_c4s_uploaded_clips",
@@ -304,23 +337,39 @@ function getDataFromForm() {
   // Optional Clips4Sale Metadata
   data["meta_data"].push({
     key: "publication_date",
-    value: ""
-  });
+    value: function() {
+      var releaseDate;
+      var d = new Date().toISOString();
+      if ($(`#fut_active`).attr("checked")) {
+        // If clip is set to activate now, set the release date as now.
+        releaseDate = d;
+      } else if ($(`#fut_checkbox`).attr("checked")) {
+        // If clip is sceduled for the future, set release date as specified on C4S.
+        var mm = $(`#fut_month`).val();
+        var dd = $(`#fut_day`).val();
+        var yyyy = $(`#fut_year`).val();
+        var hh = $(`#fut_hour`).val();
+        var mm = $(`#fut_minute`).val();
+        releaseDate = `${yyyy}-${mm}-${dd}T${hh}:${mm}:00.000Z`;
+      }
+      return releaseDate;
+    }
+  })
   data["meta_data"].push({
     key: "_publication_date",
     value: "field_5cb9cb17c4602"
   });
   data["meta_data"].push({
     key: "c4s_poster_image",
-    value: ""
+    value: $(`#ClipImage`).val()
   });
   data["meta_data"].push({
     key: "_c4s_poster_image",
-    value: ""
+    value: "field_5cbad9226a4ad"
   });
   data["meta_data"].push({
     key: "c4s_trailer",
-    value: ""
+    value: $(`#clip_preview`).val()
   });
   data["meta_data"].push({
     key: "_c4s_trailer",
@@ -328,7 +377,7 @@ function getDataFromForm() {
   });
   data["meta_data"].push({
     key: "c4s_file",
-    value: ""
+    value: $(`input[name="ClipName"]`).val()
   });
   data["meta_data"].push({
     key: "_c4s_file",
@@ -352,7 +401,7 @@ function getDataFromForm() {
   });
   data["meta_data"].push({
     key: "c4s_price",
-    value: ""
+    value: $(`#clip_price`).val()
   });
   data["meta_data"].push({
     key: "_c4s_price",
@@ -408,22 +457,22 @@ function getDataFromForm() {
     key: "_trailer_mp4_url",
     value: ""
   });
-  data["meta_data"].push({
-    key: "minio_object_key",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_minio_object_key",
-    value: "field_5cca0bdfed7da"
-  });
-  data["meta_data"].push({
-    key: "minio_bucket_name",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_minio_bucket_name",
-    value: "field_5cca0b62ed7d9"
-  });
+  // data["meta_data"].push({
+  //   key: "minio_object_key",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_minio_object_key",
+  //   value: "field_5cca0bdfed7da"
+  // });
+  // data["meta_data"].push({
+  //   key: "minio_bucket_name",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_minio_bucket_name",
+  //   value: "field_5cca0b62ed7d9"
+  // });
   data["meta_data"].push({
     key: "video_duration",
     value: ""
@@ -432,71 +481,136 @@ function getDataFromForm() {
     key: "_video_duration",
     value: "field_5adc9a469b9c1"
   });
-  data["meta_data"].push({
-    key: "_publicize_twitter_user",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "pornstars",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_pornstars",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "cn_trailer_bucket_name",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_cn_trailer_bucket_name",
-    value: "field_5cce21b2a6f2b"
-  });
-  data["meta_data"].push({
-    key: "cn_trailer_object_key",
-    value: ""
-  });
-  data["meta_data"].push({
-    key: "_cn_trailer_object_key",
-    value: "field_5cce21d9a6f2c"
-  });
+  // data["meta_data"].push({
+  //   key: "_publicize_twitter_user",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "pornstars",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_pornstars",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "cn_trailer_bucket_name",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_cn_trailer_bucket_name",
+  //   value: "field_5cce21b2a6f2b"
+  // });
+  // data["meta_data"].push({
+  //   key: "cn_trailer_object_key",
+  //   value: ""
+  // });
+  // data["meta_data"].push({
+  //   key: "_cn_trailer_object_key",
+  //   value: "field_5cce21d9a6f2c"
+  // });
 
   return data;
 };
 
 function woocommerceSaveProduct(id, data={}) {
-  // var data = {};
-  var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
-  console.log(`Sending HTTP Request: ${apiUrl}${id}`);
-  var httpVerb;
-  if (id) { // If not an existing product, create a new one.
-    httpVerb = "put";
-    createdOrUpdated = "updated";
+  if (!data.name && !data.description) {
+    return;
   } else {
-    httpVerb = "post";
-    createdOrUpdated = "created";
+    alert("You must have clip title and description filled out before you can save to ClipNuke.com.");
   }
-  $.ajax({
-    url: `${apiUrl}${id}`,
-    data: data,
-    type: httpVerb,
-    cache: false,
-    crossDomain: true,
-    asynchronous: false,
-    jsonpCallback: 'deadCode',
-    timeout: 10000, // set a timeout in milliseconds
-    complete: function(xhr, responseText, thrownError) {
-      if (xhr.status == "200") {
-        console.log(`Success! Product was ${createdOrUpdated}.`);
+  data.status = "draft"; // NOTE May interfere with pending status. But we don't want to publish to ClipNuke.
+  var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
+  var name = data.name.replace(/\d{3,4}.*$/, "").replace(/\s-\s|\s-|mp4|wmv|MP4|WMV|mov|avi|MOV|AVI|1080+|480+|720+|4K|4k/, "");
+
+  // Get existing product data if it exists.
+  // Do a search on ClipNuke /wc/v3/ api for an existing video.
+  console.log(`Searching for a *similar* product on ClipNuke.`);
+  if (!id) { // If there are similar product results.
+    $.ajax({
+      url: `${apiUrl}?search=${name}`,
+      type: "GET",
+      cache: false,
+      crossDomain: true,
+      asynchronous: false,
+      jsonpCallback: 'deadCode',
+      timeout: 10000, // set a timeout in milliseconds
+      complete: function(xhr, responseText, thrownError) {
+        console.log(xhr.responseJSON);
+        console.log("Response Code: " + xhr.status);
+        if (xhr.responseJSON[0]) {
+          console.log(xhr.responseJSON);
+          console.log(`Found a similar product: ${xhr.responseJSON[0].id}`);
+          data.status = xhr.responseJSON[0].status; // Keep video's status
+          sendToClipnuke(data, xhr.responseJSON[0].id); // Update existing video
+        } else {
+          sendToClipnuke(data); // Create new video
+        }
       }
+    });
+  } else {
+    sendToClipnuke(data, id); // Create new video
+  }
+  function sendToClipnuke(data, id) {
+    console.log(`Sending HTTP Request: ${apiUrl}${id}`);
+    var httpVerb;
+    if (id) { // If not an existing product, create a new one.
+      httpVerb = "put";
+      createdOrUpdated = "updated";
+    } else {
+      httpVerb = "post";
+      createdOrUpdated = "created";
     }
-  });
+    // Submit new data to ClipNuke.
+    $.ajax({
+      url: `${apiUrl}${id}`,
+      data: data,
+      type: httpVerb,
+      cache: false,
+      crossDomain: true,
+      asynchronous: false,
+      jsonpCallback: 'deadCode',
+      timeout: 10000, // set a timeout in milliseconds
+      complete: function(xhr, responseText, thrownError) {
+        if (xhr.status == "200") {
+          console.log(`Success! Product was ${createdOrUpdated}.`);
+          console.log(xhr.responseJSON);
+        }
+      }
+    });
+  }
 };
+
 
 /**
  * HELPERS
  * These are pieces of code that may be used on multiple content-scripts and can be abstracted to helpers.js
  */
+ /**
+ * ClipNuke - Get Product JSON data from ClipNuke API
+ * @param  {Integer} id               ClipNuke Video ID
+ * @return {Obj}                      Response object from ClipNuke API containing video data or error.
+ */
+ function woocommerceGetProduct(id) {
+   var apiUrl = `https://clipnuke.com/wp-json/wc/v3/products/`;
+   console.log(`Sending HTTP GET Request: ${apiUrl}${id}`);
+   $.ajax({
+     url: `${apiUrl}${id}`,
+     type: "get",
+     cache: false,
+     crossDomain: true,
+     asynchronous: false,
+     jsonpCallback: 'deadCode',
+     timeout: 10000, // set a timeout in milliseconds
+     complete: function(xhr, responseText, thrownError) {
+       if (xhr.status == "200") {
+         console.log(`Success! Product #${id} was fetched from ClipNuke.`);
+         console.log(xhr.responseJSON);
+         return xhr.responseJSON;
+       }
+     }
+   });
+ };
 
 // Add a extend pseudo function. CSS Match text.
 $.expr[':'].textEquals = $.expr.createPseudo(function(arg) {
