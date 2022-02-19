@@ -40,7 +40,7 @@ body {
   padding-right: 20px;
   line-height: 49px;
   height: 49px;
-  background-image: url("images/vault_4.0/Back.png");
+  background-image: /*url("images/vault_4.0/Back.png")*/;
   background-position: 20px center;
   background-repeat: no-repeat;
   font-size: 13px;
@@ -137,45 +137,6 @@ body {
   -webkit-box-shadw: 0 -1px 1px -1px darkgrey;
 }
 
-.showIcons #vaultMenuItem {
-  background-image: url("images/vault_4.0/extension/Vault.png");
-}
-
-.showIcons #sitesMenuItem {
-  background-image: url("images/vault_4.0/extension/Sites.png");
-}
-
-.showIcons #formFillsMenuItem {
-  background-image: url("images/vault_4.0/extension/FormFill.png");
-}
-
-.showIcons #generateMenuItem {
-  background-image: url("images/vault_4.0/extension/Generate.png");
-}
-
-.showIcons #securityDashboardMenuItem {
-  background-image: url("images/vault_4.0/extension/securityDashboard.png");
-}
-
-.showIcons #notesMenuItem {
-  background-image: url("images/vault_4.0/extension/Secure_Note.png");
-}
-
-.showIcons #logoutMenuItem {
-  background-image: url("images/vault_4.0/extension/Log_Out.png");
-}
-
-#specialOfferMenuItem {
-  display: none;
-  background-image: url("images/vault_4.0/extension/Gift.png");
-}
-
-.feature-omaria #specialOfferMenuItem {
-  background-image: url("images/vault_4.0/extension/Gift@2x.png");
-  background-size: 15px;
-  background-position: 24px 12px;
-}
-
 #main {
   display: none;
   overflow: hidden;
@@ -245,7 +206,7 @@ body {
   right: 20px;
   top: 0;
   bottom: 0;
-  background: url("images/vault_4.0/extension/More.png") center center no-repeat;
+  background: /*url("images/vault_4.0/extension/More.png") center center no-repeat*/;
 }
 
 .badge {
@@ -391,10 +352,6 @@ body {
   background-color: transparent !important;
 }
 
-.background {
-  background-image: url("images/vault_4.0/Edit.png");
-}
-
 .backgroundCircle {
   padding-right: 25px;
 }
@@ -448,14 +405,6 @@ body {
 .dropDownIcon {
   font-size: 0.9em !important;
   margin-top: 1px;
-}
-
-.moreItem.copyUsername {
-  background-image: url("images/vault_4.0/Copy_Username.png");
-}
-
-.moreItem.copyPassword {
-  background-image: url("images/vault_4.0/Copy_Password.png");
 }
 
 .moreItem:hover {
@@ -833,7 +782,7 @@ body {
 }
 
 .extensionSearchPlaceholder {
-  background-image: url("images/vault_4.0/extension/Empty_Search.png");
+  background-image: /* url("images/vault_4.0/extension/Empty_Search.png") */;
   background-position: center;
   background-repeat: no-repeat;
   color: rgb(188, 198, 206);
@@ -1140,19 +1089,6 @@ body:not(.noFavorites).matchingSitesOverTwo .matchingSitesTopLevelContainer {
   background-position: 20px 12px;
 }
 
-.feature-omaria .more {
-  background-image: url("images/dropdownIconset/chevron.png");
-  background-size: 21px;
-  background-repeat: no-repeat;
-  width: 20px;
-  right: 12px;
-  background-position: 0 12px;
-}
-
-.feature-omaria #vaultMenuItem {
-  background-image: url("images/dropdownIconset/vault.png");
-}
-
 .feature-omaria .premiumIncentiveBadge {
   width: 120px;
   height: 20px;
@@ -1166,44 +1102,6 @@ body:not(.noFavorites).matchingSitesOverTwo .matchingSitesTopLevelContainer {
 .feature-omaria .premiumIncentiveBadge .premiumIncentiveImage {
   width: 15px;
   height: 15px;
-}
-
-.feature-omaria #favoriteSitesMenuItem {
-  background-image: url("images/dropdownIconset/favorites.png");
-}
-
-.feature-omaria #recentSitesMenuItem {
-  background-image: url("images/dropdownIconset/recentlyUsed.png");
-}
-
-.feature-omaria #allItemsMenuItem {
-  background-image: url("images/dropdownIconset/allItems.png");
-}
-
-.feature-omaria #addItem {
-  background-image: url("images/dropdownIconset/add.png");
-}
-
-.feature-omaria #generateMenuItem {
-  background-image: url("images/dropdownIconset/generatePassword.png");
-}
-
-.feature-omaria #securityDashboardMenuItem {
-  background-image: url("images/dropdownIconset/securityDashboard.png");
-}
-
-.feature-omaria #optionsMenuItem,
-.feature-omaria #optionsMenuItemEnt {
-  background-image: url("images/dropdownIconset/accountOptions.png");
-}
-
-.feature-omaria #adminConsoleMenuItem {
-  background-image: url("images/dropdownIconset/adminConsole.png");
-}
-
-.feature-omaria #logoutMenuItem {
-  background-image: url("images/dropdownIconset/logout.png");
-  border: 0;
 }
 
 .subMenuOverlay {
@@ -1530,7 +1428,7 @@ body:not(.noFavorites).matchingSitesOverTwo .matchingSitesTopLevelContainer {
   content: "";
   width: 80px;
   height: 80px;
-  background-image: url("images/upgradetier.png");
+  background-image: /* url("images/upgradetier.png") */;
   background-position: 0 0;
   background-size: 240px 320px;
   position: absolute;
@@ -1576,19 +1474,19 @@ body:not(.noFavorites).matchingSitesOverTwo .matchingSitesTopLevelContainer {
 }
 
 .panelContainer.enterpriseExpired .features .feature.one:after {
-  background-image: url("images/shared-folder-icon.png");
+  background-image: /*url("images/shared-folder-icon.png")*/;
   background-repeat: no-repeat;
   background-size: 78px;
 }
 
 .panelContainer.enterpriseExpired .features .feature.two:after {
-  background-image: url("images/single-sign-on-icon.png");
+  background-image: /*url("images/single-sign-on-icon.png")*/;
   background-repeat: no-repeat;
   background-size: 78px;
 }
 
 .panelContainer.enterpriseExpired .features .feature.three:after {
-  background-image: url("images/admin-console-logo.png");
+  background-image: /*url("images/admin-console-logo.png")*/;
   background-repeat: no-repeat;
   background-size: 78px;
 }
@@ -1801,7 +1699,7 @@ body.panelIsActive {
   display: inline-block;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url("images/vault_4.0/promotion/tag-free-trial@2x.png");
+  background-image: /*url("images/vault_4.0/promotion/tag-free-trial@2x.png")*/;
 }
 
 .promotion.extensionMenuItem {
