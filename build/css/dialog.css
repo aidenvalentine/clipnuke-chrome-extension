@@ -1,3 +1,43 @@
+/* Hide list buttons */
+#mainMenu > li {
+  list-style: none;
+}
+/* Add margin to icons in popup.html */
+li > a > .glyphicon, li > .glyphicon {
+  margin-right: 8px;
+}
+/* Hide scrollbars in popup.html */
+li, a {
+  overflow: hidden!important;
+}
+#login {
+  min-width: auto;
+  padding: 0 40px;
+  border-radius: 5px;
+  line-height: 40px!important;
+  background: #d32d27;
+  cursor: pointer!important;
+  font-size: 15px;
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  text-rendering: auto;
+  color: -internal-light-dark(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: default!important;
+  height: 40px;
+}
 
 /*
 ******* Dialogs *******
