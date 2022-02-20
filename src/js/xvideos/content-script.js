@@ -181,6 +181,7 @@ function fillForm(id) {
         // Autofill form
         // Title
         $(`#upload_form_titledesc_title`).val(data.name);
+        addTranslations(data);
         data.meta_data.forEach(function(element) {
           if (element.key == "translations_0_xvideos_title") {
             // Open language selector
@@ -287,75 +288,57 @@ function getUrlParameter(sParam) {
    });
  };
 
-$('#upload_form_title_translations > legend').append('<a id="add-translations">Click Here to Add ClipNuke Translations</a>');
-$('#add-translations').click(function() {
-  addTranslations();
-});
-
-function addTranslations() {
-  // $('#upload_form_title_translations_title_translations_tr_0_tr_0_title').val("Test English");
-  // $('#upload_form_title_translations_title_translations_tr_1').show();
-  // $('#upload_form_title_translations_title_translations_tr_1_tr_1_title').val("Test Spanish");
-
-
-  // $('#upload_form_title_translations_title_translations > button').click(function() {
-  //   $('#upload_form_title_translations_title_translations_tr_0_tr_0_title').val("This is a test title");
-  // });
-  // $('#upload_form_title_translations_title_translations > button').click();
-  // waitForEl($(`a[data-locale="' + "en" + '"]`), function() {
-  //   $('a[data-locale="' + "en" + '"]').click();
-  // });
-  // $('#upload_form_title_translations_title_translations > button').off();
-
-
-
-  // $('#upload_form_title_translations_title_translations > button').click(function() {
-  //   sleep(2000);
-  //   $('a[data-locale="' + "es" + '"]').click();
-  //   $('#upload_form_title_translations_title_translations_tr_1_tr_1_title').val("yo soy es en ingles");
-  // });
-  // $('#upload_form_title_translations_title_translations > button').click();
-  // $('#upload_form_title_translations_title_translations > button').off();
-  var event = {};
-  event.translations = [{
-    lang: "en",
-    xvideosTitle: "This is simply a fucking test",
-    networkTitle: "A test network description on this bad boy."
-  }, {
-    lang: "es",
-    xvideosTitle: "Yo soy Alejandro. Tengo quince anos.",
-    networkTitle: "Tu madre no es sopa",
-
-  }];
-  console.log(event);
-  if (event["translations"][0]) {
-    $('#upload_form_title_translations_title_translations > button').click();
-    $('a[data-locale="' + event["translations"][0]["lang"] + '"]').click();
-    $('#upload_form_title_translations_title_translations_tr_0_tr_0_title').val(event["translations"][0]["xvideosTitle"]);
-    if (event["translations"][0]["lang"] && event["translations"][0]["networkTitle"]) {
-      $('#upload_form_title_translations_title_network_translations_ntr_0 > div > div > div > span > button').click();
-      $('a[data-locale="' + event["translations"][0]["lang"] + '"]').click();
-      $('#upload_form_title_translations_title_network_translations_ntr_0_ntr_0_title').val(event["translations"][0]["networkTitle"]);
+function addTranslations(data) {
+  /* Pick the right flag for the right language. */
+  function flagClass(lang) {
+    switch(lang) {
+      case "en": // English
+        return "flag-us";
+      case "es": // Spanish
+        return "flag-es";
+      case "pt": // Portugese
+        return "flag-pt";
+      case "nl": // Dutch
+        return "flag-nl";
+      case "de": // German
+        return "flag-de";
+      case "fr": // French
+        return "flag-pt";
+      case "po": // Polish
+        return "flag-pl";
+      case "ru": // Russian
+        return "flag-ru";
+      case "cz": // Czech
+        return "flag-cz";
+      case "ja": // Japanese
+        return "flag-jp";
+      case "zh": // Chinese
+        return "flag-cn";
+      case "hi": // Indian
+        return "flag-in";
+      case "ar": // Arabic
+        return "flag-eg";
     }
   }
-  if (event["translations"][1]) {
-    $('#upload_form_title_translations_title_translations > button').click();
-    $('a[data-locale="' + event["translations"][1]["lang"] + '"]').click();
-    $('#upload_form_title_translations_title_translations_tr_1_tr_1_title').val(event["translations"][1]["xvideosTitle"]);
-    if (event["translations"][1]["lang"] && event["translations"][1]["networkTitle"]) {
-      $('#upload_form_title_translations_title_network_translations > button').click();
-      $('a[data-locale="' + event["translations"][1]["lang"] + '"]').click();
-      $('#upload_form_title_translations_title_network_translations_ntr_1_ntr_1_title').val(event["translations"][1]["networkTitle"]);
-    }
-  }
-}
-
-var waitForEl = function(selector, callback) {
-  if (jQuery(selector).length) {
-    callback();
+  if (data.translations[0].xvideosTitle) {
+    $(`#upload_form_titledesc_title`).val(data.translations[0].xvideosTitle); // Main Clip Title
   } else {
-    setTimeout(function() {
-      waitForEl(selector, callback);
-    }, 100);
+    $(`#upload_form_titledesc_title`).val(data.name);
   }
-};
+  if (data.translations[0].networkTitle) {
+    $(`#upload_form_titledesc_title_network`).val(data.translations[0].networkTitle); // Main Network title
+  }
+  data.translations.pop();
+  data.translations.forEach(function(item, i) {
+    // XVideos Title
+    $(`input#upload_form_title_translations_title_translations_tr_${i}_tr_${i}_title_lang`).val(item.lang).trigger("change");
+    $(`#upload_form_title_translations_title_translations_tr_${i} > div > div > div > span > button > span`).removeClass("flag-question").addClass(flagClass(item.lang));
+    $(`#upload_form_title_translations_title_translations_tr_${i}`).show();
+    $(`#upload_form_title_translations_title_translations_tr_${i}_tr_${i}_title`).val(item.xvideosTitle);
+    // Network Title
+    $(`input#upload_form_title_translations_title_network_translations_ntr_${i}_ntr_${i}_title_lang`).val(item.lang).trigger("change");
+    $(`#upload_form_title_translations_title_network_translations_ntr_${i} > div > div > div > span > button > span`).removeClass("flag-question").addClass(flagClass(item.lang));
+    $(`#upload_form_title_translations_title_network_translations_ntr_${i}`).show();
+    $(`#upload_form_title_translations_title_network_translations_ntr_${i}_ntr_${i}_title`).val(item.networkTitle);
+  });
+}
