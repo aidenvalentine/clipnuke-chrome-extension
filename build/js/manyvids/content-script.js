@@ -14,11 +14,12 @@ function populateFromLocalStorage() {
     var cleanText = localStorage.getItem("clipnuke-description").replace(/<\/?[^>]+(>|$)/g, "");
     $(`textarea[name="video_description"]`).val(cleanText);
     $(`input[name="video_cost"]`).val(localStorage.getItem("clipnuke-price"));
-    $(`input.vid-categories`).val(localStorage.getItem("clipnuke-categories"));
-    var categories = localStorage.getItem("clipnuke-categories");
-    categories.split(/\s*,\s*/).forEach(function(val) {
+
+    var categories = JSON.parse(localStorage.getItem("clipnuke-categories"));
+    categories.forEach(function(val) {
         console.log(val);
-        $(`ul.dropdown-menu > li > a:icontains("${val}")`).trigger("click");
+        var html = `<li><a href="javascript:;" class="remove-tag" title="Remove tag">x</a>${val.name}<input name="tags[]" type="hidden" value="${val.id}"></li>`;
+        $(".multi-dropdown-list").append(html);
     });
 }
 
@@ -69,13 +70,7 @@ function saveDataToLocalStorage(data) {
       return;
     }
   });
-  data.meta_data.forEach(function(element) {
-    if (element.key == "categories") {
-      console.log(`Categories: ${element.value}`);
-      localStorage.setItem("clipnuke-categories", element.value);
-      return;
-    }
-  });
+  localStorage.setItem("clipnuke-categories", JSON.stringify(data.manyvids.categories));
   populateFromLocalStorage(); // Then autofill form if we're on the edit form page.
 }
 
