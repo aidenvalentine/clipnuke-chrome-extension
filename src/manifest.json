@@ -9,7 +9,6 @@
   },
   "options_page": "options.html",
   "permissions": [
-    "activeTab",
     "storage",
     "scripting"
   ],
@@ -30,23 +29,19 @@
       "all_frames": true,
       "match_about_blank": true,
       "js": ["js/jquery-3.6.0.min.js", "js/clips4sale/content-script.js", "js/jquery-ui.min.js"],
-      "run_at": "document_end",
-      "web_accessible_resources": ["css/injected.css"]
+      "run_at": "document_end"
     }, {
       "matches": ["https://www.xvideos.com/account/uploads/new*"],
-      "js": ["js/jquery-3.6.0.min.js", "js/xvideos/content-script.js", "js/xvideos/defaults.js", "js/xvideos/account.js"],
-      "run_at": "document_end",
-      "web_accessible_resources": ["css/injected.css"]
+      "js": ["js/jquery-3.6.0.min.js", "js/xvideos/content-script.js", "js/xvideos/defaults.js"],
+      "run_at": "document_end"
     }, {
       "matches": ["https://www.pornhub.com/upload/videodata*"],
       "js": ["js/jquery-3.6.0.min.js", "js/analytics.js", "js/pornhub/content-script.js", "js/pornhub/defaults.js"],
-      "run_at": "document_end",
-      "web_accessible_resources": ["css/injected.css"]
+      "run_at": "document_end"
     }, {
       "matches": ["https://www.manyvids.com/Edit-vid/*", "https://www.manyvids.com/Edit-vid/*", "https://www.manyvids.com/Upload-vids/*"],
       "js": ["js/jquery-3.6.0.min.js", "js/analytics.js", "js/manyvids/content-script.js", "js/manyvids/defaults.js"],
-      "run_at": "document_end",
-      "web_accessible_resources": ["css/injected.css"]
+      "run_at": "document_end"
     }
   ],
   "action": {
