@@ -5,10 +5,6 @@
 
 ## Installation
 1. Download the latest version of the ClipNuke Chrome extension from [https://chrome.google.com/webstore/detail/clipnuke/pkckkligpcfojcdckjaojbffmkpheonp](https://chrome.google.com/webstore/detail/clipnuke/pkckkligpcfojcdckjaojbffmkpheonp)
-1. Extract to a folder on your PC.
-1. Navigate to [chrome://extensions/](chrome://extensions/), enable **Developer mode** and click "Load Unpacked" button.
-1. Select the `/` dir  (or `/build` directory if you're using GitHub source code) where you unzipped this extension. (Which contains the manifest file).
-![Chrome Installation](/docs/images/chrome-installation.png)
 
 ## Getting Started
 1. [Sign up for a clipnuke.com account](https://clipnuke.com/my-account/).
