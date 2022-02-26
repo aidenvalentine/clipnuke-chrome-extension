@@ -9,6 +9,7 @@
 ## Getting Started
 1. [Sign up for a clipnuke.com account](https://clipnuke.com/my-account/).
 1. Add your video metadata (and files) to ClipNuke.
+1. Click "Post to Clips4Sale", "Post to ManyVids" or the other action buttons to prefill that site's upload form.
 
 ## Tour
 [![Watch a demo of this software in action](/docs/images/clipnuke-tour.jpg)](/docs/video/ClipNuke-Tour_hd.mp4)
