@@ -6,6 +6,9 @@
 ## Installation
 1. Download the latest version of the ClipNuke Chrome extension from [https://chrome.google.com/webstore/detail/clipnuke/pkckkligpcfojcdckjaojbffmkpheonp](https://chrome.google.com/webstore/detail/clipnuke/pkckkligpcfojcdckjaojbffmkpheonp)
 
+## Developers
+If you're cloning (or downloading) this repo -- the Chrome plugin lives inside the /build directory. The other files are part of the source code and build process. The /src is the source code. And you can run `npm start build` or `npm start server` to build the plugin with the changes you've made to /src files. This runs webpack and converts/copies the files to the /build directory. This process also allows you to include bundle node modules using **require/webpack** to use in the plugin.
+
 ## Getting Started
 1. [Sign up for a clipnuke.com account](https://clipnuke.com/my-account/).
 1. Add your video metadata (and files) to ClipNuke.
